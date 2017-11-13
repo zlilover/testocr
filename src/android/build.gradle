@@ -1,0 +1,11 @@
+ repositories {
+	flatDir {
+        dirs 'libs'
+    } 
+}
+
+dependencies {
+    compile 'com.alibaba:fastjson:1.1.59.android'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile(name: 'lfocrdetectlib', ext: 'aar')
+}

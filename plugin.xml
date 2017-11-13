@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 插件的Id，安装后注册的Id为此id加js-moudle的name属性,即cordova_plugins.js里的id属性 -->
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="sc-plugin-ocr" version="0.0.1">
+    <!-- 插件名称 -->
+    <name>IDCardOCRPlugin</name>
+    <!-- 插件描述 -->
+    <description>sc ocr for id card</description>
+    <!-- js文件的地址，安装后路径为：plugins/插件Id/src属性值 -->
+    <js-module name="IDCardOCRPlugin" src="www/ocr.js">
+    <!-- 跟asserts/cordova_plugins.js中填clobbers的值一样 -->
+        <clobbers target="SCOCRPlugin"/>
+    </js-module>
+    <!-- android -->
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+        <!-- config-file中包含的这段会原封不动的插入到config.xml文件中 -->
+            <feature name="IDCardOCRPlugin">
+                <param name="android-package" value="com.sc.plugin.IDCardOCRPlugin"/>
+            </feature>
+        </config-file>
+		
+		<config-file parent="/resources" target="res/values/strings.xml">
+		
+			<string name="string_main_scan_front">扫描正面</string>
+			<string name="string_main_scan_back">扫描反面</string>
+			<string name="string_main_scan_front_and_back">连续扫描正反面</string>
+			<string name="string_main_scan_front_quick">快速扫描姓名和号码</string>
+			<string name="string_main_scan_custom_front">自定义界面</string>
+			<string name="string_card_scan_time_out_message">扫描失败，请重新扫描</string>
+		</config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:name="com.sc.plugin.IDCardBothActivity" android:theme="@style/LFAppTheme">
+				<intent-filter>
+					<action android:name="ocrplugin.action.scan"/>
+				</intent-filter>
+			</activity>
+		</config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:name="com.sc.plugin.LFScanIDCardResultActivity">
+				<intent-filter>
+					<action android:name="ocrplugin.action.scanresult" />
+					<category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+		</config-file>
+		
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-permission android:name="android.permission.VIBRATE" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+			<uses-feature 
+				android:name="android.hardware.camera"
+				android:required="true" />
+			<uses-feature
+				android:name="android.hardware.camera.autofocus"
+				android:required="false" />
+		</config-file>
+		
+        <!-- 本地代码，有多个文件就写多个source-file，src对应本项目，target对应安装后的目录 -->
+        <source-file src="src/android/source/CardActivity.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/CardRecognizer.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/CardScanner.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/IDCardActivity.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/IDCardBothActivity.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/IDCardRecognizer.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/IDCardScanner.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/IDCardViewData.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFApiParameter.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFApiParameterList.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFBackCardResultView.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFCardImageView.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFCardResultPresenter.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFFrontCardResultView.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFHttpRequestUtils.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFIdCardInfo.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFIdCardRegionInfo.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFIdCardResult.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFNetworkCallback.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFPoint.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFRegion.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFScanIDCardResultActivity.java" target-dir="src/com/sc/plugin"/>	
+		<source-file src="src/android/source/LFBasePresenter.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFCameraProxy.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFCardPresenter.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFCardScanListener.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFImageUtils.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFIntentTransportData.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFLog.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFPreviewLayout.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFSettingUtils.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/LFSpUtils.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/MyResource.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/IDCardOCRPlugin.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/OverlayView.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/PreviewSaver.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/RecognizerInitFailException.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/source/Util.java" target-dir="src/com/sc/plugin"/>
+		<source-file src="src/android/res/values/colors.xml" target-dir="res/values"/>
+		<source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
+		<source-file src="src/android/res/layout/layout_card_activity_main.xml" target-dir="res/layout"/>
+		<source-file src="src/android/res/drawable/btn_gb.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_main_scan_btn_bg_normal.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_main_scan_btn_bg_press.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_main_scan_btn_bg_selector.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_main_scan_btn_text_selector.xml" target-dir="res/drawable"/>
+		
+		<source-file src="src/android/res/drawable/drawable_scan_result_back_btn_bg_normal.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_scan_result_back_btn_bg_press.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_scan_result_back_btn_bg_selector.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_scan_result_btn_text_selector.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_scan_result_front_btn_bg_normal.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_scan_result_front_btn_bg_press.xml" target-dir="res/drawable"/>
+		<source-file src="src/android/res/drawable/drawable_scan_result_front_btn_bg_selector.xml" target-dir="res/drawable"/>
+		
+		<source-file src="src/android/res/mipmap-xhdpi/icon_scan_back.png" target-dir="res/mipmap-xhdpi"/>
+		<source-file src="src/android/res/mipmap-xhdpi/icon_scan_line.png" target-dir="res/mipmap-xhdpi"/>
+		<framework src="src/android/build.gradle" custom="true" type="gradleReference"/>
+		<resource-file src="src/android/libs/lfocrdetectlib.aar" target="libs/lfocrdetectlib.aar"/>
+		<resource-file src="src/android/assets/SenseID_OCR.lic" target="assets/SenseID_OCR.lic"/>
+    </platform>
+    <!-- 其他平台的代码 -->
+</plugin>
